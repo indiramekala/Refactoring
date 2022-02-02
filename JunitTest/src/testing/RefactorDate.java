@@ -2,30 +2,30 @@ package testing;
 
 import java.util.Scanner;
 
-public class Date {
+public class RefactorDate {
 	private String month;
 	private int day;
 	private int year; // a four digit number.
 
-	public Date() {
+	public RefactorDate() {
 		month = "January";
 		day = 1;
 		year = 1000;
 	}
 
-	public Date(int monthInt, int day, int year) {
+	public RefactorDate(int monthInt, int day, int year) {
 		setDate(monthInt, day, year);
 	}
 
-	public Date(String monthString, int day, int year) {
+	public RefactorDate(String monthString, int day, int year) {
 		setDate(monthString, day, year);
 	}
 
-	public Date(int year) {
+	public RefactorDate(int year) {
 		setDate(1, 1, year);
 	}
 
-	public Date(Date aDate) {
+	public RefactorDate(RefactorDate aDate) {
 		if (aDate == null)// Not a real date.
 		{
 			System.out.println("Fatal Error.");
@@ -39,7 +39,7 @@ public class Date {
 
 	public void setDate(int monthInt, int day, int year) {
 		if (dateOK(monthInt, day, year)) {
-			this.month = monthString(monthInt);
+			this.month = monthStringRef(monthInt);
 			this.day = day;
 			this.year = year;
 		} else {
@@ -76,7 +76,7 @@ public class Date {
 			System.out.println("Fatal Error");
 			System.exit(0);
 		} else
-			month = monthString(monthNumber);
+			month = monthStringRef(monthNumber);
 	}
 
 	public void setDay(int day) {
@@ -87,7 +87,7 @@ public class Date {
 			this.day = day;
 	}
 
-	public int getMonth() {
+	public int getMonthRef() {
 		if (month.equals("January"))
 			return 1;
 		else if (month.equals("February"))
@@ -131,16 +131,16 @@ public class Date {
 		return (month + " " + day + ", " + year);
 	}
 
-	public boolean equals(Date otherDate) {
+	public boolean equals(RefactorDate otherDate) {
 		return ((month.equals(otherDate.month)) && (day == otherDate.day) && (year == otherDate.year));
 	}
 
-	public boolean precedes(Date otherDate) {
-		return ((year < otherDate.year) || (year == otherDate.year && getMonth() < otherDate.getMonth())
+	public boolean precedes(RefactorDate otherDate) {
+		return ((year < otherDate.year) || (year == otherDate.year && getMonthRef() < otherDate.getMonthRef())
 				|| (year == otherDate.year && month.equals(otherDate.month) && day < otherDate.day));
 	}
 
-	public void readInput() {
+	public void readInputRef() {
 		boolean tryAgain = true;
 		Scanner keyboard = new Scanner(System.in);
 		while (tryAgain) {
@@ -163,17 +163,17 @@ public class Date {
 	}
 
 	private boolean dateOK(String monthString, int dayInt, int yearInt) {
-		return (monthOK(monthString) && (dayInt >= 1) && (dayInt <= 31) && (yearInt >= 1000) && (yearInt <= 9999));
+		return (monthOKRef(monthString) && (dayInt >= 1) && (dayInt <= 31) && (yearInt >= 1000) && (yearInt <= 9999));
 	}
 
-	private boolean monthOK(String month) {
+	public boolean monthOKRef(String month) {
 		return (month.equals("January") || month.equals("February") || month.equals("March") || month.equals("April")
 				|| month.equals("May") || month.equals("June") || month.equals("July") || month.equals("August")
 				|| month.equals("September") || month.equals("October") || month.equals("November")
 				|| month.equals("December"));
 	}
 
-	private String monthString(int monthNumber) {
+	public String monthStringRef(int monthNumber) {
 		switch (monthNumber) {
 		case 1:
 			return "January";
@@ -205,5 +205,4 @@ public class Date {
 			return "Error"; // to keep the compiler happy
 		}
 	}
-
 }
